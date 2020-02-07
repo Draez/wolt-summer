@@ -1,22 +1,14 @@
 import React from 'react';
-import './Restaurants.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+
+import { Container, Row } from 'react-bootstrap';
+import Restaurant from '../Restaurant/Restaurant';
+import SortButton from '../SortButton/SortButton';
 
 const Restaurants = (props) => {
 	return (
 		<Container>
-			<Button className="btn filter" onClick={props.sort}>
-				Listaa järjestykseen
-			</Button>
-			<Row>
-				{props.restaurants.map((restaurant) => (
-					<Col md={4}>
-						<img src={restaurant.image} />
-						<h2>{restaurant.name}</h2>
-						<span>{restaurant.city}</span>
-					</Col>
-				))}
-			</Row>
+			<SortButton sort={props.sort} direction={props.desc} />
+			<Row>{props.restaurants.map((restaurant) => <Restaurant restaurant={restaurant} />)}</Row>
 		</Container>
 	);
 };

@@ -1,15 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
+
 import Restaurants from '../components/Restaurants/Restaurants';
 
 class App extends Component {
+	// State
 	state = {
 		data: [],
-		loaded: false
+		loaded: false,
+		desc: false
 	};
-	/*
-		Fetch Restaurants
-	*/
+
+	// Fetch restaurants from JSON file
 	componentDidMount() {
 		fetch('./restaurants.json')
 			.then((response) => {
@@ -29,22 +31,38 @@ class App extends Component {
 			});
 	}
 
+	// Sorting data alphabetically
 	sortByName() {
-		const restaurants = [ ...this.state.data ].sort((a, b) => {
-			if (a.name < b.name) return -1;
-			if (a.name > b.name) return 1;
-			return 0;
-		});
-		this.setState({ data: restaurants });
+		if (!this.state.desc) {
+			this.setState({ desc: true });
+			const restaurants = [ ...this.state.data ].sort((a, b) => {
+				if (a.name < b.name) return -1;
+				if (a.name > b.name) return 1;
+				return 0;
+			});
+			this.setState({ data: restaurants });
+		} else {
+			this.setState({ desc: false });
+			const restaurants = [ ...this.state.data ].sort((a, b) => {
+				if (a.name > b.name) return -1;
+				if (a.name < b.name) return 1;
+				return 0;
+			});
+			this.setState({ data: restaurants });
+		}
 	}
 
 	render() {
 		if (!this.state.loaded) {
-			return <p>Loading...</p>;
+			return <p style={{ textAlign: 'center' }}>Loading...</p>;
 		} else {
 			return (
 				<div className="App">
-					<Restaurants restaurants={this.state.data} sort={this.sortByName.bind(this)} />
+					<Restaurants
+						restaurants={this.state.data}
+						sort={this.sortByName.bind(this)}
+						desc={this.state.desc}
+					/>
 				</div>
 			);
 		}

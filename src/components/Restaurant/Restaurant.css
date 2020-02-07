@@ -1,0 +1,16 @@
+.bg {
+	height: 250px;
+	background-size: cover;
+}
+
+.name {
+	margin-top: 18px;
+	font-size: 21px;
+	font-weight: 700;
+}
+
+.city {
+	text-transform: uppercase;
+	color: #999;
+	letter-spacing: 1px;
+}
